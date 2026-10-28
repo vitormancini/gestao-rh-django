@@ -1,7 +1,8 @@
 from django.contrib import admin
-from .models import Documentos
+
+from .models import Documento
 
 
-@admin.register(Documentos)
+@admin.register(Documento)
 class DocumentosAdmin(admin.ModelAdmin):
     pass
