@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+<a class="btn btn-primary" href="{% url 'create_funcionario' %}">Novo</a>
+
+<ul>
+    {% for funcionario in object_list %}
+        <li>
+            <a href="{% url 'update_funcionario' funcionario.id %}">{{ funcionario.nome }}</a>
+            <a class="btn btn-danger" href="{% url 'delete_funcionario' funcionario.id %}">Excluir</a>
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
