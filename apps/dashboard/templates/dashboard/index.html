@@ -6,10 +6,19 @@
       One of three columns
     </div>
     <div class="col-sm">
-      One of three columns
+      Olá, {{ usuario.funcionario.nome }}
     </div>
     <div class="col-sm">
-        <a href="{% url 'logout' %}">Logout</a>
+        <form method="post" action="{% url 'logout' %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-link">Logout</button>
+        </form>
+
+        {% if usuario.funcionario.empresa %}
+          <a href="{% url 'update_empresa' usuario.funcionario.empresa.id %}">Editar empresa</a>
+        {% else %}
+          <a href="{% url 'create_empresa' %}">Criar empresa</a>
+        {% endif %}
     </div>
   </div>
 {% endblock %}
