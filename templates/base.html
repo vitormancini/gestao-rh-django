@@ -12,7 +12,19 @@
 <body>
 
     <div class="container">
-        {% block main %} {% endblock %}
+        {% block main %}{% endblock %}
     </div>
+
+    {% block static %}
+        <script src="{% static 'js/jquery.js' %}"></script>
+        <script src="{% static 'js/ajax.js' %}"></script>
+
+        <!-- Instancia global para chamadas Ajax -->
+        <script>
+            window.ajax = new AjaxHandler();
+            window.ajax.setHeader('X-CSRFToken', '{{ csrf_token }}');
+        </script>
+        {% block extra_js %}{% endblock %}
+    {% endblock %}
 </body>
 </html>

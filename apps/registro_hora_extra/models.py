@@ -10,6 +10,7 @@ class RegistroHoraExtra(models.Model):
         Funcionario, on_delete=models.PROTECT, verbose_name="Funcionario"
     )
     horas = models.DecimalField(max_digits=5, decimal_places=2)
+    utilizada = models.BooleanField(default=False, verbose_name="Utilizada")
 
     def get_absolute_url(self):
         return reverse("list_hora_extra")

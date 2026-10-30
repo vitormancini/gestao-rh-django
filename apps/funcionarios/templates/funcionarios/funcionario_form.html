@@ -1,19 +1,49 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block main %}
-<form method="post">
-    {% csrf_token %}
-    {{ form }}
-    <button type="submit">Salvar</button>
-</form>
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Salvar</button>
+    </form>
 
-<a href="{% url 'create_documento' object.id %}" class="btn btn-info">Adicionar documento</a>
+    {% if object.id %}
+        <hr/>
+        <h3>Documentos</h3>
+        
+        <a href="{% url 'create_documento' object.id %}" class="btn btn-info">Adicionar documento</a>
+        
+        <br/>
+        <br/>
+        
+        <ul>
+            {% for documento in object.documento_set.all %}
+                <li>
+                    <a href="{{ documento.arquivo.url }}">{{ documento }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+        
+        <hr/>
+        <h3>Banco de hora</h3>
+        
+        <p>Total: {{ object.total_hora_extra }}</p>
+        
+        <ul>
+            {% for hora_extra in object.registrohoraextra_set.all %}
+                <li>
+                    <span>{{ hora_extra.motivo }} - {{ hora_extra.horas }}</span>
+                    <button type="button" onclick="utilizarHoraExtra({{ hora_extra.id }})" class="btn btn-warning">Utilizar Hora Extra</button>
+                </li>
+            {% endfor %}
+        </ul>
 
-<br/>
-<br/>
+        
+    {% endif %}
 
-{% for documento in object.documento_set.all %}
-    <a href="{{ documento.arquivo.url }}">{{ documento }}</a>
-    <br/>
-{% endfor %}
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/registro_hora_extra/registrohoraextra_form.js' %}"></script>
 {% endblock %}

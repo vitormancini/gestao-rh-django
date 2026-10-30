@@ -1,4 +1,6 @@
+from django.http import JsonResponse
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from apps.registro_hora_extra.forms import RegistroHoraExtraForm
@@ -36,3 +38,17 @@ class RegistroHoraExtraCreateView(CreateView):
         kwargs = super().get_form_kwargs()
         kwargs["user"] = self.request.user
         return kwargs
+
+
+class UtilizouHoraExtra(View):
+    def post(self, request, pk):
+        hora_extra = RegistroHoraExtra.objects.get(id=pk)
+        hora_extra.utilizada = True
+        hora_extra.save()
+        return JsonResponse(
+            {
+                "status": "success",
+                "message": "Hora extra utilizada com sucesso",
+            },
+            status=200,
+        )
